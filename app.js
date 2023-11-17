@@ -7,6 +7,7 @@ import { detailErrorMessage } from "./helpers/index.js";
 import { mdw } from "./middlewares/index.js";
 import chalk from "chalk";
 
+
 export const app = express();
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.static("public"));
+
 
 app.use(/\/api\/(auth|users)/, authRouter);
 app.use("/api/contacts", contactsRouter);

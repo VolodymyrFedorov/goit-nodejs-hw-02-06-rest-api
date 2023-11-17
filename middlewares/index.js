@@ -10,6 +10,7 @@ import {
   handleError,
 } from "../decorators/index.js";
 
+
 export const mdw = {
   validateId: ctrlWrapperAsync(validateId),
   authenticate: ctrlWrapperAsync(authenticate),
