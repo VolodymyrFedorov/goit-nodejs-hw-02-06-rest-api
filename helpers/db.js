@@ -23,7 +23,6 @@ const parseValidationErrorMessage = (errOrMsg) => {
 
 const parseDupKeyErrorMessage = (errOrMsg) => {
   const message = errOrMsg?.message ?? errOrMsg ?? "";
-
   const [, collection] = message.match(REGEXP.collectionName);
   const [, key] = message.match(REGEXP.singleDupKey);
 

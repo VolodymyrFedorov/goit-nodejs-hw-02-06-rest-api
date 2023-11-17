@@ -14,7 +14,7 @@ router.get("/", ctrl.getAll);
 
 router.get("/:id", ctrl.getById);
 
-router.post("/", validateBody(schema.add), ctrl.add);
+router.post("/", validateBody(schema.add), mdw.isContactExists, ctrl.add);
 
 router.put("/:id", validateBody(schema.add), ctrl.updateById);
 

@@ -2,7 +2,7 @@ import { Schema } from "mongoose";
 import { VALIDATION_DATA } from "../../constants/index.js";
 import { setMongooseShapeTrimAll } from "../../helpers/index.js";
 
-const { name, phone, email } = VALIDATION_DATA;
+const { name, email, subscription } = VALIDATION_DATA;
 
 const shape = {
   name: {
@@ -11,33 +11,37 @@ const shape = {
     match: [name.pattern, name.message],
     set: name.normalizer,
   },
-  phone: {
-    type: String,
-    required: true,
-    match: [phone.pattern, phone.message],
-    set: phone.normalizer,
-  },
   email: {
     type: String,
     required: true,
+    unique: true,
     validate: {
       validator: email.validator,
       message: email.message,
     },
     set: email.normalizer,
   },
-  favorite: {
-    type: Boolean,
-    default: false,
-  },
-  owner: {
-    type: Schema.Types.ObjectId,
-    ref: "user",
+  password: {
+    type: String,
+    minlength: 6,
     required: true,
+  },
+  subscription: {
+    type: String,
+    match: [subscription.pattern, subscription.message],
+    default: subscription.default,
+  },
+  token: {
+    type: String,
+    default: null,
+  },
+  avatarUrl: {
+    type: String,
   },
 };
 
 setMongooseShapeTrimAll(shape);
+
 const options = {
   versionKey: false,
   timestamps: true,

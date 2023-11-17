@@ -1,3 +1,5 @@
 export * from "./ctrlWrapper.js";
-export * from "./controllerWrapper.js";
 export * from "./validateBody.js";
+export * from "./handleError.js";
+export * from "./upload/index.js";
+

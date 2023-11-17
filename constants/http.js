@@ -1,10 +1,14 @@
 export const HTTP_STATUS = {
   ok: 200,
   created: 201,
+  noContent: 204,
   badRequest: 400,
+  unauth: 401,
   notFound: 404,
   conflict: 409,
+  contentTooLarge: 413,
   unprocContent: 422,
+  serverError: 500,
 };
 
 export const HTTP_STATUS_TEXT = {
@@ -13,6 +17,7 @@ export const HTTP_STATUS_TEXT = {
   403: "Forbidden",
   404: "Not Found",
   409: "Conflict",
+  413: "Content Too Large",
   422: "Unprocessable Content",
   500: "Sever error",
 };

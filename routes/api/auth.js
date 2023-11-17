@@ -1,12 +1,26 @@
 import express from "express";
-import { validateBody } from "../../decorators/index.js";
+import fs from "fs/promises";
 import { joiSchema as schema } from "../../schemas/users/index.js";
 import { ctrl } from "../../controllers/auth/index.js";
 import { mdw } from "../../middlewares/index.js";
+import {
+  validateBody,
+  handleError,
+  uploadSingleImage,
+  uploadImage,
+} from "../../decorators/index.js";
 
 export const router = express.Router();
 
-router.post(/\/(signup|register)/, validateBody(schema.signup), ctrl.signup);
+router.post(
+  /\/(signup|register)/,
+  uploadSingleImage("avatar"),
+  validateBody(schema.signup),
+  mdw.isUserExists,
+  mdw.processAvatarFile,
+  ctrl.signup,
+  mdw.removeAvatarOnError
+);
 
 router.post(/\/(signin|login)/, validateBody(schema.signin), ctrl.signin);
 
@@ -19,4 +33,13 @@ router.patch(
   mdw.authenticate,
   validateBody(schema.updateSubscription),
   ctrl.updateSubscription
+);
+
+router.patch(
+  "/avatars",
+  mdw.authenticate,
+  uploadSingleImage("avatar"),
+  mdw.processAvatarFile,
+  ctrl.updateAvatar,
+  mdw.removeAvatarOnError
 );

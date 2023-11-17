@@ -1,10 +1,24 @@
-import { HTTP_STATUS } from "../../constants/index.js";
-import { crypt } from "../../helpers/index.js";
+import { crypt, Avatar } from "../../helpers/index.js";
+import { HTTP_STATUS, AVATAR_OPTIONS } from "../../constants/index.js";
 import { User } from "../../models/index.js";
 
-export const signup = async ({ body }, res) => {
-  const password = await crypt.hash(body.password);
-  const { name, email } = await User.create({ ...body, password });
+const { gravaTheme: theme, size } = AVATAR_OPTIONS;
 
-  res.status(HTTP_STATUS.created).json({ name, email });
+export const signup = async ({ body, file }, res) => {
+  const { name, email, password } = body;
+
+  const avatarUrl =
+    file?.avatarUrl ?? Avatar.getGravatarUrl(email, { theme, size });
+
+  await User.create({
+    ...body,
+    password: await crypt.hash(password),
+    avatarUrl,
+  });
+
+  res.status(HTTP_STATUS.created).json({
+    name,
+    email,
+    avatarUrl,
+  });
 };
