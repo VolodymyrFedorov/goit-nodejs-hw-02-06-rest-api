@@ -32,6 +32,7 @@ export const processAvatarFile = async (req, res, next) => {
 
       file.avatarUrl = path
         .join(AVATARS_DIR, avatar.fileName)
+
         .replaceAll("\\", "/");
     }
   }

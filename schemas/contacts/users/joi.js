@@ -17,6 +17,7 @@ const shape = {
     .required(),
 
   password: Joi.string().min(PASSWORD_MIN_LEN).required(),
+
   subscription: Joi.string()
     .pattern(subscription.pattern)
     .messages({ "string.pattern.base": subscription.message })
@@ -37,8 +38,5 @@ export const schema = {
       .messages({ "string.pattern.base": subscription.message })
       .required()
       .trim(),
-  }),
-  verifyEmail: Joi.object({
-    email: shape.email,
   }),
 };

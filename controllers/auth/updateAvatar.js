@@ -11,7 +11,6 @@ export const updateAvatar = async ({ user, file }, res) => {
   if (!file) {
     throw HttpError(HTTP_STATUS.badRequest, "avatar: need a file");
   }
-
   const { avatarUrl } = file;
   const { avatarUrl: oldAvatarUrl } = await User.findByIdAndUpdate(user._id, {
     avatarUrl,

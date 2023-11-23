@@ -8,6 +8,7 @@ import { updateAvatar } from "./updateAvatar.js";
 import { verifyEmail } from "./verifyEmail.js";
 import { resendVerificationCode } from "./resendVerificationCode.js";
 
+
 export const ctrl = {
   signup: ctrlWrapperAsync(signup),
   signin: ctrlWrapperAsync(signin),

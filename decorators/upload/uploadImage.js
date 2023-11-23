@@ -9,7 +9,6 @@ import {
 } from "../../constants/index.js";
 
 const { TEMP_DIR } = process.env;
-
 const destination = path.resolve(TEMP_DIR);
 export const MAX_FILE_SIZE = 1024 ** 2 * 5;
 const SUPPORTED_FORMATS = JIMP_SUPPORTED_FORMATS.join(", ");

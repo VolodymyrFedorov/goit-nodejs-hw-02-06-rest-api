@@ -10,6 +10,7 @@ import { HTTP_STATUS, HTTP_STATUS_TEXT } from "./constants/index.js";
 
 const { PUBLIC_DIR } = process.env;
 
+
 export const app = express();
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 

@@ -6,7 +6,6 @@ const ERR_AUTH_FAILED = "email or password is invalid";
 
 export const signin = async ({ body }, res) => {
   const { email, password } = body;
-
   const user = await User.findOne({ email });
   const success =
     user?.verified && (await crypt.compare(password, user?.password));
