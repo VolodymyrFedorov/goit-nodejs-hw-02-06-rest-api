@@ -1,0 +1,34 @@
+import Joi from "joi";
+import fs from "fs/promises";
+
+export const isStr = (v) => typeof v === "string";
+export const isFunc = (v) => typeof v === "function";
+export const isNum = (v) => !isNaN(v - parseFloat(v));
+export const isValidEmail = (v, options = { minDomainSegments: 2 }) => {
+  const { error } = Joi.string().email(options).validate(v);
+  return !error;
+};
+
+export const detailErrorMessage = ({ method, url } = {}, message) => {
+  return { path: `${method} ${url}`, message };
+};
+
+export const setJoiShapeTrimAll = (shape) => {
+  Object.entries(shape).forEach(([key, field]) => {
+    if (field.type === "string") shape[key] = field.trim();
+  });
+};
+
+export const setMongooseShapeTrimAll = (shape) => {
+  Object.entries(shape).forEach(([, field]) => {
+    if (field.type === String) field.trim = true;
+  });
+};
+
+export const checkFileExists = async (path) => {
+  try {
+    (await fs.stat(path)).isFile();
+  } catch (err) {
+    if (err.code === "ENOENT") throw err;
+  }
+};
