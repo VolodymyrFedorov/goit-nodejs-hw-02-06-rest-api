@@ -38,6 +38,14 @@ const shape = {
   avatarUrl: {
     type: String,
   },
+  verified: {
+    type: Boolean,
+    default: false,
+  },
+  verificationCode: {
+    type: String,
+    default: null,
+  },
 };
 
 setMongooseShapeTrimAll(shape);

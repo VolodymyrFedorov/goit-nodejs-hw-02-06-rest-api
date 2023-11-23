@@ -6,13 +6,16 @@ const ERR_AUTH_FAILED = "email or password is invalid";
 
 export const signin = async ({ body }, res) => {
   const { email, password } = body;
-  const foundUser = await User.findOne({ email });
+  const user = await User.findOne({ email });
+  const success =
+    user?.verified && (await crypt.compare(password, user?.password));
 
-  const success = await crypt.compare(password, foundUser?.password);
-  if (!success) throw HttpError(HTTP_STATUS.unauth, ERR_AUTH_FAILED);
-  const token = jwt.create(foundUser._id);
+  if (!success) {
+    throw HttpError(HTTP_STATUS.unauth, ERR_AUTH_FAILED);
+  }
 
-  await User.findByIdAndUpdate(foundUser._id, { token });
+  const token = jwt.create(user._id);
+  await User.findByIdAndUpdate(user._id, { token });
 
   res.json({ token });
 };

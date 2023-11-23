@@ -1,5 +1,3 @@
-const AVATAR_SIZE = 250;
-
 export const GRAVATAR = {
   baseUrl: "https://www.gravatar.com",
   theme: {
@@ -15,7 +13,7 @@ export const GRAVATAR = {
 };
 
 export const AVATAR_OPTIONS = {
-  path: "avatars",
-  size: AVATAR_SIZE,
+  width: 250,
+  height: 250,
   gravaTheme: GRAVATAR.theme.robot,
 };

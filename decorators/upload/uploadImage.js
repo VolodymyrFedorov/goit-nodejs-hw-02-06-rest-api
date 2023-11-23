@@ -1,3 +1,4 @@
+import "dotenv/config";
 import multer from "multer";
 import path from "path";
 import { HttpError, uuid } from "../../helpers/index.js";
@@ -7,7 +8,8 @@ import {
   JIMP_SUPPORTED_MIMETYPES,
 } from "../../constants/index.js";
 
-const destination = path.resolve("tmp");
+const { TEMP_DIR } = process.env;
+const destination = path.resolve(TEMP_DIR);
 export const MAX_FILE_SIZE = 1024 ** 2 * 5;
 const SUPPORTED_FORMATS = JIMP_SUPPORTED_FORMATS.join(", ");
 const isImageType = (mimeType) => JIMP_SUPPORTED_MIMETYPES.includes(mimeType);

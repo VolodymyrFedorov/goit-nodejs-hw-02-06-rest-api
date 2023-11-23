@@ -1,14 +1,11 @@
+import "dotenv/config";
 import fs from "fs/promises";
 import path from "path";
-import { checkFileExists, HttpError } from "../../helpers/index.js";
+import { HttpError } from "../../helpers/index.js";
 import { User } from "../../models/index.js";
-import {
-  HTTP_STATUS,
-  AVATAR_OPTIONS,
-  STATIC_PATH,
-} from "../../constants/index.js";
+import { HTTP_STATUS } from "../../constants/index.js";
 
-const { path: avatarsPath } = AVATAR_OPTIONS;
+const { PUBLIC_DIR, AVATARS_DIR } = process.env;
 
 export const updateAvatar = async ({ user, file }, res) => {
   if (!file) {
@@ -19,10 +16,9 @@ export const updateAvatar = async ({ user, file }, res) => {
     avatarUrl,
   });
 
-  if (oldAvatarUrl.startsWith(avatarsPath)) {
-    const fullName = path.resolve(STATIC_PATH, oldAvatarUrl);
+  if (oldAvatarUrl.startsWith(AVATARS_DIR)) {
+    const fullName = path.resolve(PUBLIC_DIR, oldAvatarUrl);
     try {
-      await checkFileExists(fullName);
       await fs.unlink(fullName);
     } catch {}
   }

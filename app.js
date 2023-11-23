@@ -1,11 +1,14 @@
+import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import logger from "morgan";
+import chalk from "chalk";
 import { contactsRouter, authRouter } from "./routes/api/index.js";
-import { HTTP_STATUS, HTTP_STATUS_TEXT } from "./constants/index.js";
 import { detailErrorMessage } from "./helpers/index.js";
 import { mdw } from "./middlewares/index.js";
-import chalk from "chalk";
+import { HTTP_STATUS, HTTP_STATUS_TEXT } from "./constants/index.js";
+
+const { PUBLIC_DIR } = process.env;
 
 
 export const app = express();
@@ -14,12 +17,10 @@ const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 app.use(express.json());
 app.use(logger(formatsLogger));
 app.use(cors());
-app.use(express.static("public"));
-
+app.use(express.static(PUBLIC_DIR));
 
 app.use(/\/api\/(auth|users)/, authRouter);
 app.use("/api/contacts", contactsRouter);
-
 app.use((req, res) => {
   res.status(HTTP_STATUS.notFound).json(detailErrorMessage(req, "Not found"));
 });

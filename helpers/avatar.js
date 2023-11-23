@@ -1,7 +1,6 @@
 import path from "path";
 import fs from "fs/promises";
 import Jimp from "jimp";
-
 import { HttpError, bitmap, checkFileExists, getHash as md5 } from "./index.js";
 import { HTTP_STATUS, GRAVATAR } from "../constants/index.js";
 

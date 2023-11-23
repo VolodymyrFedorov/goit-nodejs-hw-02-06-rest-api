@@ -9,16 +9,15 @@ import { JIMP_SUPPORTED_EXTNAMES } from "../constants/index.js";
  * @param {object} options
  * @returns {string}
  */
-
 const resize = async (
   filePath,
   { width: w, height: h, jpeg: qual, cover, removeOriginal } = {}
 ) => {
-  let img = await Jimp.read(filePath);
+  const img = await Jimp.read(filePath);
 
-  let saveAsJpeg = qual >= 0 || qual <= 100;
+  const saveAsJpeg = qual >= 0 || qual <= 100;
 
-  let newFilePath =
+  const newFilePath =
     saveAsJpeg && !img._originalMime.endsWith("jpeg")
       ? filePath.replace(/(?<=\.)\w{3,4}$/, "jpg")
       : filePath;
@@ -29,7 +28,6 @@ const resize = async (
   saveAsJpeg && img.quality(qual);
 
   await img.writeAsync(newFilePath);
-
   if (removeOriginal && newFilePath !== filePath) {
     await fs.unlink(filePath);
   }
